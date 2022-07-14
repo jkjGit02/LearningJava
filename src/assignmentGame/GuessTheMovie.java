@@ -16,8 +16,6 @@ public class GuessTheMovie {
 
 		String path = new File("C:\\Users\\Jithin\\Desktop\\Software\\Guess the movie\\movies.txt").getAbsolutePath();
 		String randomLine = game2.displayRandomLine(path);
-		System.out.println(randomLine);
-		// System.out.println(newMaskedLine.replace("", " "));
 		String newMaskedLine = game2.maskLine(randomLine);
 		game2.fillBlanks(randomLine, newMaskedLine);
 

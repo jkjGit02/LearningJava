@@ -7,6 +7,9 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Game2 {
+	int index = 0;
+
+	// converting file to a list
 
 	public String displayRandomLine(String path) {
 		List<String> lines;
@@ -17,18 +20,22 @@ public class Game2 {
 			// TODO: handle exception
 			return null;
 		}
+
+		// Picking a random line out of list
+
 		Random random = new Random();
 		String randomLine = lines.get(random.nextInt(lines.size()));
 		return randomLine;
 	}
-	// System.out.println(randomLine);
+
+	// masking the randomly picked line
 
 	public String maskLine(String randomLine) {
 
 		StringBuilder sb = new StringBuilder(randomLine.length());
 		String newMaskedLine = null;
 		for (int i = 0; i < randomLine.length(); i++) {
-			newMaskedLine = sb.append('_').toString();
+			newMaskedLine = (sb.append('_').toString()).replace("", " ");
 
 		}
 		return newMaskedLine;
@@ -36,13 +43,33 @@ public class Game2 {
 
 	public void fillBlanks(String randomLine, String newMaskedLine) {
 		Scanner sc = new Scanner(System.in);
-		for (int i = 0; i <= 10; i++) {
-			System.out.println("You are guessing:" + (newMaskedLine.replace("", " ")) + "\nYou have guessed (" + i
+		StringBuilder enteredLine = new StringBuilder(newMaskedLine);
+		for (int i = 0; i < 10; i++) {
+
+			System.out.println("You are guessing:" + enteredLine + "\nYou have guessed (" + i
 					+ ") wrong letters\nGuess a letter:");
-			int index = 0;
-			index = randomLine.indexOf(sc.next());
-			System.out.println(index);
+			// int index = 0;
+			char x = sc.next().charAt(0);
+			index = randomLine.indexOf(x, index);
+
+			if (index != -1) {
+				if (index == 0) {
+					enteredLine.setCharAt(index + 1, x);
+					//System.out.println(enteredLine);
+				}
+				while (index != -1 && index < randomLine.length()) {
+
+					if (index != -1 && index != 0) {
+						enteredLine.setCharAt(2 * index + 1, x);
+						//System.out.println(enteredLine);
+					}
+					index = randomLine.indexOf(x, index + 1);
+
+				}
+				i--;
+			}
 		}
+		System.out.println("You have exhausted number of tries");
 
 	}
 }
